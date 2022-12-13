@@ -1,0 +1,52 @@
+openapi: "3.0.0"
+info:
+  title: T-Shirt Store API
+  description: A project to create a backend ecommerce api
+  version: 1.1.0
+  contact:
+    email: coding.kumarsumit@gmail.com
+    url: "https://github.com/kumasumit"
+# Swagger-Server Documentation
+servers:
+  - url: "{protocol}://localhost:8080/api/{version}"
+    description: for local host
+    variables:
+      version:
+        enum:
+          - v1
+          - v2
+        default: v1
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+#Swagger-Security Documentation
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+    BearerAuth:
+      type: http
+      scheme: bearer
+# Swagger-Documentation for different paths
+paths:
+  /:
+    get:
+      tags:
+        - Home
+      summary: returns a greet message from TShirt Ecommerce website.
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "mystring"
+        400:
+          description: Bad Input Request
+        500:
+          description: Internal server error      
