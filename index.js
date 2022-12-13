@@ -1,6 +1,11 @@
 require('dotenv').config();
+const connectWithDb = require('./config/db');
 const app = require('./app');
 
+//here we connect the database before the routes are loaded, and before the server is started
+connectWithDb();
+//ask rahul, why server console is printing first and db connect success is showing last in terminal,
+//is this because db connect is async and server function is synchronous
 
 //the router middleware will be second last just before the error middleware is called
 //this tells the index/root that all routes will be handled by index.js files in routes folder
@@ -21,6 +26,7 @@ app.use(function(err, req, res, next) {
     //here if status of error is given we use that error status, if not we use 400 for now
     //but in future the error status and much better error handling can be done
     return res.status(err.status || 400).json({message: err.message, success: false});
+    //ask rahul , in next can we do process.exit(1) for graceful exit
 })
 
 app.listen(process.env.PORT, ()=> {
