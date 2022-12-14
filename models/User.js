@@ -77,11 +77,11 @@ userSchema.pre('save', function (next) {
 //methods on the userSchema
 //ask rahul, why are we not using static here ? what is the difference if we write static
 //1.validate the password stored in database with password sent in by user
-userSchema.methods.validatePassword = asyncPromiseHandler(async function(userSentPassword) {
+userSchema.methods.validatePassword = async function(userSentPassword) {
     return await bcrypt.compare(userSentPassword, this.password);
     //this method returns a simple true and false.
     //in case any error is returned by async function, asyncPromiseHandler will catch and handle the error
-})
+}
 
 //2.create and return the jwtToken for the user
 userSchema.methods.getJwtToken = function() {
