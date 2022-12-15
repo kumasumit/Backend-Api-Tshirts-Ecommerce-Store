@@ -10,8 +10,9 @@ const cookieToken = require('../utils/cookieToken');
 //1.1 method/function to register a user
 const registerUser = async (req, res, next) => {
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    console.log("start of the register function "+req.files);
-
+    console.log("start of the register function ");
+    console.log(req.files);
+    console.log(req.body);
     // here we check if the req object has any files or not
     // ask rahul when will the control come here, why do we need this block of code ? 
     if(req.files && req.files.photo == null){
@@ -20,7 +21,8 @@ const registerUser = async (req, res, next) => {
     }
     // destructure all required fields from req.body
     const {name, email, password} = req.body;
-    if(!email||!name ||!password){
+    console.log(name, email, password);
+    if(!name||!email ||!password){
         return next(new CustomError("Name, Email and Password cannot be blank, all these fields are required ", 400));
     }
     //initialize an empty photoObject object
@@ -28,16 +30,17 @@ const registerUser = async (req, res, next) => {
     }
     //if the req object has any files
     if(req.files) {
-        console.log(req.files.phot);
+        
+        console.log(req.files.photo);
         let file = req.files.photo;
-        console.log("File Object: "+file);
+        console.log(file);
         console.log(file.tempFilePath);
-        const result = await cloudinary.v2.uploader.uploadFile(file.tempFilePath, {
+        const result = await cloudinary.v2.uploader.upload(file.tempFilePath, {
                 folder:"users", 
-                width: 150, 
+                width: 250, 
                 crop:"scale",
         })  
-        console.log("Cloudinary upload Result Object: "+result);  
+        console.log(result);  
         photoObject = {
             id : result.public_id,
             secure_url : result.secure_url

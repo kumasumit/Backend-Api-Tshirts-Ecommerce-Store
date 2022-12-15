@@ -5,6 +5,7 @@ const cloudinary = require('cloudinary');
 
 //here we connect the database before the routes are loaded, and before the server is started
 connectWithDb();
+
 //ask rahul, why server console is printing first and db connect success is showing last in terminal,
 //is this because db connect is async and server function is synchronous
 //cloudinary config goes here, just after the db is connected
